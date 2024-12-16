@@ -9,30 +9,45 @@ import { FormEvent, useEffect, useState } from 'react';
 import { expenseCategories } from '../../types/expenseCategories';
 
 export default function Settings() {
-  const hadnleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-  };
   const [state, setState] = useState<{ [key: string]: number }>({});
   const [isLoading, setIsLoading] = useState(true);
-
-  const handleChange = (key: string, value: number) => {
-    setState({ ...state, [key]: value });
-  };
 
   const getSettingsData = async () => {
     try {
       const res = await fetch('http://localhost:3000/api/settings');
       const data = await res.json();
       setState(data);
-      console.log({ data });
       setIsLoading(false);
     } catch (err) {}
+  };
+
+  const updateSettings = async () => {
+    try {
+      const res = await fetch('http://localhost:3000/api/settings', {
+        method: 'post',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(state),
+      });
+      const data = await res.json();
+      setState(data);
+      setIsLoading(false);
+    } catch (err) {}
+  };
+
+  const handleChange = (key: string, value: number) => {
+    setState({ ...state, [key]: value });
   };
 
   useEffect(() => {
     getSettingsData();
   }, []);
 
+  const hadnleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    await updateSettings();
+  };
   return isLoading ? (
     <div
       style={{
@@ -67,6 +82,7 @@ export default function Settings() {
         </div>
         {expenseCategories.map((expense) => (
           <div
+            key={expense.id}
             style={{
               display: 'flex',
               flexDirection: 'column',

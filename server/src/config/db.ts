@@ -9,7 +9,7 @@ export const connentToMongo = async () => {
     const settings = await SettingsModel.findOne();
     if (!settings) {
       await createSid();
-      console.log('[database] sid sreated');
+      console.log('[database] sid created');
     }
   } catch (err) {
     console.error(err);

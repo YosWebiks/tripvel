@@ -12,20 +12,23 @@ export const getSettings = async () => {
 
 export const patchSetting = async (newSettings: Setting) => {
   try {
-    return await SettingsModel.findOneAndUpdate({}, { $set: newSettings },{new:true}).lean();
+    return await SettingsModel.findOneAndUpdate(
+      {},
+      { $set: newSettings },
+      { new: true }
+    ).lean();
   } catch (err) {
     console.error(err);
     throw err;
   }
 };
 
-
 export const createSid = async () => {
-    try {
-      const firstDoc = new SettingsModel({});
-      await firstDoc.save()
-    } catch (err) {
-      console.error(err);
-      throw err;
-    }
-  };
+  try {
+    const firstDoc = new SettingsModel({});
+    await firstDoc.save();
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};

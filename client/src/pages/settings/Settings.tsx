@@ -23,6 +23,7 @@ export default function Settings() {
 
   const updateSettings = async () => {
     try {
+      setIsLoading(true);
       const res = await fetch('http://localhost:3000/api/settings', {
         method: 'post',
         headers: {

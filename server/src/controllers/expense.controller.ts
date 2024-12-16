@@ -59,7 +59,7 @@ export const updateExistingExpense = async (
   next: NextFunction
 ) => {
   try {
-    await patchDailyExpense(req.params.id, req.body);
+    res.json(await patchDailyExpense(req.params.id, req.body))
   } catch (err) {
     console.error("Can't update an existing expense", err);
     next(err);

@@ -1,4 +1,10 @@
-import { Button, Input, Label, Text } from '@fluentui/react-components';
+import {
+  Button,
+  Input,
+  Label,
+  Spinner,
+  Text,
+} from '@fluentui/react-components';
 import { FormEvent, useEffect, useState } from 'react';
 import { expenseCategories } from '../../types/expenseCategories';
 
@@ -18,13 +24,27 @@ export default function Settings() {
       const res = await fetch('http://localhost:3000/api/settings');
       const data = await res.json();
       setState(data);
+      console.log({ data });
       setIsLoading(false);
     } catch (err) {}
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getSettingsData();
+  }, []);
 
-  return (
+  return isLoading ? (
+    <div
+      style={{
+        width: '100vw',
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
+      <Spinner size="extra-large" />
+    </div>
+  ) : (
     <div>
       <form onSubmit={hadnleSubmit}>
         <div

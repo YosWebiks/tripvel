@@ -7,18 +7,22 @@ import {
 } from '@fluentui/react-components';
 import { FormEvent, useEffect, useState } from 'react';
 import { expenseCategories } from '../../types/expenseCategories';
+import { useNavigate } from 'react-router-dom';
 
 export default function Settings() {
   const [state, setState] = useState<{ [key: string]: number }>({});
   const [isLoading, setIsLoading] = useState(true);
-
+  const navigate = useNavigate();
+  
   const getSettingsData = async () => {
     try {
       const res = await fetch('http://localhost:3000/api/settings');
       const data = await res.json();
       setState(data);
       setIsLoading(false);
-    } catch (err) {}
+    } catch (err) {
+      setIsLoading(false);
+    }
   };
 
   const updateSettings = async () => {
@@ -34,7 +38,10 @@ export default function Settings() {
       const data = await res.json();
       setState(data);
       setIsLoading(false);
-    } catch (err) {}
+      navigate('/')
+    } catch (err) {
+      setIsLoading(false);
+    }
   };
 
   const handleChange = (key: string, value: number) => {
@@ -62,7 +69,7 @@ export default function Settings() {
     </div>
   ) : (
     <div>
-      <Text align="center" weight="bold" style={{margin:"1em"}}>
+      <Text align="center" weight="bold" style={{ margin: '1em' }}>
         Settings
       </Text>
       <form onSubmit={hadnleSubmit}>

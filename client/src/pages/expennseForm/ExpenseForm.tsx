@@ -17,6 +17,26 @@ export default function ExpenseForm() {
   const [amount, setAmount] = useState(0);
   const [desc, setDesc] = useState('');
 
+  const handleNewExpense = async () => {
+    try {
+      console.log('HERE');
+      const res = await fetch('http://localhost:3000/api/expenses', {
+        method: 'post',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          [expType]: amount,
+          desc,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <>
       <Button
@@ -82,7 +102,7 @@ export default function ExpenseForm() {
             <Input
               appearance="underline"
               type="text"
-              placeholder='Description'
+              placeholder="Description"
               style={{ width: '80%', marginBottom: '2em' }}
               value={desc}
               onChange={(e) => setDesc(e.target.value)}
@@ -90,7 +110,11 @@ export default function ExpenseForm() {
           )}
           {/* action */}
           <div className="">
-            <Button appearance="primary" disabled={!amount || !expType || (!desc && expType == 'const')}>
+            <Button
+              appearance="primary"
+              onClick={handleNewExpense}
+              disabled={!amount || !expType || (!desc && expType == 'const')}
+            >
               Save
             </Button>
           </div>

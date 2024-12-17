@@ -42,7 +42,7 @@ export const addNewExpense = async (
   next: NextFunction
 ) => {
   try {
-    if (req.body.type == 'const') {
+    if (req.body.hasOwnProperty('const')) {
       res.json(await addConstExpense(req.body));
     } else {
       res.json(await addDailyExpense(req.body));

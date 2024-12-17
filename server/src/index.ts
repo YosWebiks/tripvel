@@ -11,11 +11,14 @@ connentToMongo();
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/expences', expenceRouter);
+app.use('/api/expenses', expenceRouter);
 app.use('/api/settings', settingRouter);
 
 // Error handeling
-app.use(async (req: Request, res: Response) => {});
+app.use(async ( req: Request, res: Response) => {
+  console.error("ERR")
+  res.send("err")
+});
 
 app.listen(3000, () => {
   console.log("[server] I'm up on port 3000");

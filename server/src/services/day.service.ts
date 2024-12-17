@@ -11,18 +11,20 @@ export const getDays = async () => {
   }
 };
 
-export const addDailyExpense = async (data: Day) => {
+export const addDailyExpense = async (data: any) => {
   try {
     let day = await DayModel.findOne({
-      $gte: new Date(new Date().setHours(0, 0, 0)),
-      $lt: new Date(new Date().setHours(23, 59, 59)),
+      date: {
+        $gte: new Date(new Date().setHours(0, 0, 0)),
+      },
     });
 
     if (!day) {
       day = new DayModel({});
     }
-
-    day = { ...day, ...(data as any) };
+    const key = Object.keys(data)[0];
+    day.$inc(key, data[key]);
+    // day = { ...day, ...(data as any) };
 
     return await day?.save();
   } catch (err) {

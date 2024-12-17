@@ -10,9 +10,12 @@ export const getConstsList = async () => {
   }
 };
 
-export const addConstExpense = async (data: Const) => {
+export const addConstExpense = async (data: any) => {
   try {
-    const constExpense = new ConstsModel(data);
+    const constExpense = new ConstsModel({
+      amount: data['const'],
+      description: data.desc,
+    });
     return await constExpense.save();
   } catch (err) {
     console.error(err);

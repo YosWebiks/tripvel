@@ -67,16 +67,33 @@ export default function ExpenseForm() {
             </Option>
           </Dropdown>
           {/* amount */}
-          <Input
-            appearance="underline"
-            type="number"
-            value={amount.toString()}
-            onChange={(e) => setAmount(e.target.valueAsNumber)}
-          />
+          <div className="">
+            <Input
+              appearance="underline"
+              type="number"
+              style={{ width: '80%', margin: '2em 0' }}
+              contentBefore={'₪'}
+              value={amount.toString()}
+              onChange={(e) => setAmount(e.target.valueAsNumber)}
+            />
+          </div>
+          {/* description */}
+          {expType == 'const' && (
+            <Input
+              appearance="underline"
+              type="text"
+              placeholder='Description'
+              style={{ width: '80%', marginBottom: '2em' }}
+              value={desc}
+              onChange={(e) => setDesc(e.target.value)}
+            />
+          )}
           {/* action */}
-          <Button appearance="primary" disabled={!amount || !expType}>
-            Save
-          </Button>
+          <div className="">
+            <Button appearance="primary" disabled={!amount || !expType || (!desc && expType == 'const')}>
+              Save
+            </Button>
+          </div>
         </DrawerBody>
       </Drawer>
     </>

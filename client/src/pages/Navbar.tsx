@@ -5,7 +5,12 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const openBtn = <Hamburger onClick={() => setIsOpen(!isOpen)} />;
+  const openBtn = (
+    <Hamburger
+      style={{ padding: '1em 2em' }}
+      onClick={() => setIsOpen(!isOpen)}
+    />
+  );
 
   return (
     <>

@@ -62,6 +62,9 @@ export default function Settings() {
     </div>
   ) : (
     <div>
+      <Text align="center" weight="bold" style={{margin:"1em"}}>
+        Settings
+      </Text>
       <form onSubmit={hadnleSubmit}>
         <div
           style={{
@@ -103,7 +106,7 @@ export default function Settings() {
             />
           </div>
         ))}
-        <Button appearance="primary" type="submit">
+        <Button style={{ margin: '1em' }} appearance="primary" type="submit">
           Save
         </Button>
       </form>
